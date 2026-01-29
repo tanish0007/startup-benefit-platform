@@ -49,7 +49,7 @@ const startServer = async () => {
       console.log('SIGTERM received. Shutting down gracefully...');
       server.close(async () => {
         await disconnectDB();
-        console.log('💤 Process terminated');
+        console.log('Process terminated');
       });
     });
 
@@ -57,7 +57,7 @@ const startServer = async () => {
       console.log('SIGINT received. Shutting down gracefully...');
       server.close(async () => {
         await disconnectDB();
-        console.log('💤 Process terminated');
+        console.log('Process terminated');
       });
     });
   } catch (error) {
