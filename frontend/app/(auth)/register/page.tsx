@@ -71,7 +71,7 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      const response = await api.post<AuthResponse>('/auth/register', formData);
+      const response = await api.post('/auth/register', formData);
       const { user, accessToken, refreshToken } = response.data.data;
 
       // Store tokens
@@ -91,7 +91,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

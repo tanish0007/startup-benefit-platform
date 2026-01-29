@@ -1,16 +1,10 @@
-/**
- * Button Component
- * 
- * Reusable button with variants and animations.
- */
-
 'use client';
 
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
@@ -32,8 +26,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       lg: 'px-8 py-4 text-lg',
     };
 
+    const MotionButton = motion.button;
+
     return (
-      <motion.button
+      <MotionButton
         ref={ref}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -48,12 +44,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading ? (
           <div className="flex items-center justify-center">
-            <div className="spinner !w-5 !h-5 !border-2" />
+            <div className="spinner w-5! h-5! border-2!" />
           </div>
         ) : (
           children
         )}
-      </motion.button>
+      </MotionButton>
     );
   }
 );
