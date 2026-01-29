@@ -16,17 +16,25 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
   try {
     const options = {
-      // Connection pool size for handling concurrent requests
       maxPoolSize: 10,
       minPoolSize: 5,
-      
-      // Timeout configurations
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-      
-      // Automatically create indexes
-      autoIndex: process.env.NODE_ENV === 'development',
+      serverSelectionTimeoutMS: 30000, // Increased to 30s
+      socketTimeoutMS: 75000, // Increased to 75s
+      family: 4, // Force IPv4
     };
+  // try {
+  //   const options = {
+  //     // Connection pool size for handling concurrent requests
+  //     maxPoolSize: 10,
+  //     minPoolSize: 5,
+      
+  //     // Timeout configurations
+  //     serverSelectionTimeoutMS: 30000,
+  //     socketTimeoutMS: 75000,
+      
+  //     // Automatically create indexes
+  //     autoIndex: process.env.NODE_ENV === 'development',
+  //   };
 
     const conn = await mongoose.connect(process.env.MONGODB_URI, options);
 

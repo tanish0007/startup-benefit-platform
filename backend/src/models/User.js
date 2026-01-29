@@ -95,7 +95,7 @@ const userSchema = new mongoose.Schema(
 );
 
 // Indexes for performance
-userSchema.index({ email: 1 });
+// userSchema.index({ email: 1 });
 userSchema.index({ isVerified: 1 });
 userSchema.index({ createdAt: -1 });
 
@@ -105,18 +105,18 @@ userSchema.index({ createdAt: -1 });
  * Only hash if password is modified
  */
 userSchema.pre('save', async function (next) {
-  // Only hash password if it's new or modified
   if (!this.isModified('password')) {
-    return next();
+    // return next();
+    return
   }
 
   try {
-    // Generate salt and hash password
     const salt = await bcrypt.genSalt(12);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
+    // next();
   } catch (error) {
-    next(error);
+    // next(error);
+    throw error;
   }
 });
 

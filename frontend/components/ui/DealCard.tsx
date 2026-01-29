@@ -21,7 +21,8 @@ export default function DealCard({ deal }: DealCardProps) {
   return (
     <Link href={`/deals/${deal._id}`}>
       <motion.div
-        whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.12)' }}
+        whileHover={{ boxShadow: '0 20px 40px rgba(0,0,0,0.12)' }}
+        transition={{ duration: 0.3 }}
         className="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer h-full flex flex-col"
       >
         {/* Image */}

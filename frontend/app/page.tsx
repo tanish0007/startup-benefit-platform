@@ -1,19 +1,11 @@
-/**
- * Landing Page
- * 
- * Main entry point with hero section, features, and CTA.
- * Includes 3D elements and extensive GSAP animations.
- */
-
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingCards from '@/components/three/FloatingCards';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -150,11 +142,6 @@ export default function LandingPage() {
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
       >
-        {/* 3D Background */}
-        <div className="absolute inset-0 z-0 opacity-30">
-          <FloatingCards />
-        </div>
-
         {/* Gradient Orbs */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" />
         <div className="absolute top-40 right-10 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '2s' }} />
@@ -206,17 +193,6 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        >
-          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-gray-400 rounded-full mt-2" />
-          </div>
-        </motion.div>
       </section>
 
       {/* Stats Section */}
@@ -224,10 +200,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="stat-item text-center"
-              >
+              <div key={index} className="stat-item text-center">
                 <div className="text-4xl sm:text-5xl font-bold gradient-text mb-2">
                   {stat.value}
                 </div>

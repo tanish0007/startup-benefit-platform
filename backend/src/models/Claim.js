@@ -98,7 +98,7 @@ claimSchema.pre('save', function (next) {
   if (this.isModified('status') && this.status === 'approved' && !this.approvedAt) {
     this.approvedAt = new Date();
   }
-  next();
+  // next();
 });
 
 /**
