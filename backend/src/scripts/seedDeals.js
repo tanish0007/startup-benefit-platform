@@ -283,7 +283,7 @@ const seedDeals = async () => {
 
         // Insert sample deals
         const deals = await Deal.insertMany(sampleDeals);
-        console.log(`✅ Successfully seeded ${deals.length} deals`);
+        console.log(`Successfully seeded ${deals.length} deals`);
 
         await mongoose.connection.close();
         console.log('Database connection closed');
