@@ -1,10 +1,3 @@
-/**
- * Deals Listing Page
- * 
- * Browse all deals with filters, search, and pagination.
- * GSAP scroll animations for cards.
- */
-
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -12,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import DealCard from '@/components/ui/DealCard';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import DealCardSkeleton from '@/components/ui/DealCardSkeleton';
 import Button from '@/components/ui/Button';
 import api from '@/lib/api';
 import { Deal } from '@/types';
@@ -52,7 +45,7 @@ export default function DealsPage() {
   ];
 
   useGSAP(() => {
-    if (dealsRef.current && deals.length > 0) {
+    if (dealsRef.current && deals.length > 0 && !loading) {
       gsap.from('.deal-card-item', {
         scrollTrigger: {
           trigger: dealsRef.current,
@@ -65,7 +58,7 @@ export default function DealsPage() {
         ease: 'power2.out',
       });
     }
-  }, [deals]);
+  }, [deals, loading]);
 
   useEffect(() => {
     fetchDeals();
@@ -178,7 +171,11 @@ export default function DealsPage() {
 
           {/* Deals Grid */}
           {loading ? (
-            <LoadingSpinner />
+            <div ref={dealsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {Array.from({ length: 12 }).map((_, index) => (
+                <DealCardSkeleton key={index} />
+              ))}
+            </div>
           ) : deals.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">🔍</div>

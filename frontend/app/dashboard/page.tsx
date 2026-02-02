@@ -1,10 +1,3 @@
-/**
- * Dashboard Page
- * 
- * User dashboard showing claimed deals and stats.
- * Protected route with auth check.
- */
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -13,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import ClaimCardSkeleton from '@/components/ui/ClaimCardSkeleton';
 import Button from '@/components/ui/Button';
 import { useAuthStore } from '@/store/authStore';
 import { isAuthenticated } from '@/lib/auth';
@@ -22,6 +15,8 @@ import { Claim, ClaimStats } from '@/types';
 import { formatRelativeTime, getCategoryLabel } from '@/lib/utils';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -54,8 +49,6 @@ export default function DashboardPage() {
     }
   };
 
-  if (loading) return <LoadingSpinner />;
-
   const statusColors = {
     pending: 'bg-yellow-100 text-yellow-800',
     approved: 'bg-green-100 text-green-800',
@@ -76,7 +69,7 @@ export default function DashboardPage() {
             className="mb-8"
           >
             <h1 className="text-4xl font-bold mb-2">
-              Welcome back, <span className="gradient-text">{user?.name}</span>
+              Welcome back, <span className="gradient-text">{user?.name || <Skeleton width={150} />}</span>
             </h1>
             <p className="text-gray-600">
               Manage your claimed deals and track your savings
@@ -84,35 +77,44 @@ export default function DashboardPage() {
           </motion.div>
 
           {/* Stats Grid */}
-          {stats && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-12"
-            >
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <div className="text-3xl font-bold text-purple-600">{stats.total}</div>
-                <div className="text-gray-600 text-sm">Total Claims</div>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <div className="text-3xl font-bold text-green-600">{stats.approved}</div>
-                <div className="text-gray-600 text-sm">Approved</div>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <div className="text-3xl font-bold text-yellow-600">{stats.pending}</div>
-                <div className="text-gray-600 text-sm">Pending</div>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <div className="text-3xl font-bold text-red-600">{stats.rejected}</div>
-                <div className="text-gray-600 text-sm">Rejected</div>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <div className="text-3xl font-bold text-gray-600">{stats.expired}</div>
-                <div className="text-gray-600 text-sm">Expired</div>
-              </div>
-            </motion.div>
-          )}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-12"
+          >
+            {loading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="bg-white p-6 rounded-xl shadow-lg">
+                  <Skeleton height={40} width={60} className="mb-2" />
+                  <Skeleton height={20} width={80} />
+                </div>
+              ))
+            ) : stats ? (
+              <>
+                <div className="bg-white p-6 rounded-xl shadow-lg">
+                  <div className="text-3xl font-bold text-purple-600">{stats.total}</div>
+                  <div className="text-gray-600 text-sm">Total Claims</div>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow-lg">
+                  <div className="text-3xl font-bold text-green-600">{stats.approved}</div>
+                  <div className="text-gray-600 text-sm">Approved</div>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow-lg">
+                  <div className="text-3xl font-bold text-yellow-600">{stats.pending}</div>
+                  <div className="text-gray-600 text-sm">Pending</div>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow-lg">
+                  <div className="text-3xl font-bold text-red-600">{stats.rejected}</div>
+                  <div className="text-gray-600 text-sm">Rejected</div>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow-lg">
+                  <div className="text-3xl font-bold text-gray-600">{stats.expired}</div>
+                  <div className="text-gray-600 text-sm">Expired</div>
+                </div>
+              </>
+            ) : null}
+          </motion.div>
 
           {/* Account Status */}
           {!user?.isVerified && (
@@ -150,7 +152,13 @@ export default function DashboardPage() {
               </Link>
             </div>
 
-            {claims.length === 0 ? (
+            {loading ? (
+              <div className="space-y-4">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <ClaimCardSkeleton key={index} />
+                ))}
+              </div>
+            ) : claims.length === 0 ? (
               <div className="bg-white rounded-xl shadow-lg p-12 text-center">
                 <div className="text-6xl mb-4">🎯</div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">No claims yet</h3>

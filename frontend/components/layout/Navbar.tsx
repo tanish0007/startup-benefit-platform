@@ -53,7 +53,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/deals', label: 'Deals' },
-    { href: '/about', label: 'About' },
+    // { href: '/about', label: 'About' },
   ];
 
   return (
