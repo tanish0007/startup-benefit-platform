@@ -51,7 +51,7 @@ Perfect for indie hackers, startup founders, and early-stage teams looking to re
 - 🚀 **Performance** - Optimized bundle size and lazy loading
 - 🧪 **Type Safety** - Full TypeScript coverage
 - 📦 **Modular Components** - Reusable UI components
-- 🎭 **Advanced Animations** - Framer Motion + GSAP + Three.js
+- 🎭 **Advanced Animations** - Framer Motion + GSAP
 
 ## 🛠️ Tech Stack
 
@@ -64,7 +64,6 @@ Perfect for indie hackers, startup founders, and early-stage teams looking to re
 - **Animations**: 
   - Framer Motion (component animations)
   - GSAP (scroll animations)
-  - Three.js (3D elements)
 - **Forms**: React Hook Form
 - **Date Handling**: date-fns
 - **UI Components**: Custom components with shadcn/ui inspiration
@@ -139,9 +138,7 @@ startup-benefits-platform/
 │   │   │   ├── Input.tsx         # Input component
 │   │   │   ├── Card.tsx          # Card component
 │   │   │   ├── DealCard.tsx      # Deal card
-│   │   │   └── LoadingSpinner.tsx
-│   │   └── 3d/
-│   │       └── FloatingCards.tsx # Three.js scene
+│   │   └── └── LoadingSpinner.tsx
 │   ├── lib/
 │   │   ├── api.ts                # API client
 │   │   ├── auth.ts               # Auth utilities
